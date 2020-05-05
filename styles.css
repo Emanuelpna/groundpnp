@@ -1,0 +1,80 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+  background: #eee;
+}
+
+header {
+  width: 100%;
+  background: #fff;
+  height: 9vh;
+  border-bottom: 1px solid #eee;
+  display: flex;
+  align-items: center;
+  padding: 0 6%;
+}
+
+main {
+  display: flex;
+  flex-flow: row wrap;
+  height: 91vh;
+}
+
+#map {
+  height: 100%;
+  width: 53%;
+  background: #666;
+}
+
+.places {
+  width: 50%;
+  height: 100%;
+  overflow: auto;
+  background: #fff;
+  padding: 50px;
+  box-shadow: -4px 6px 6px #000;
+  margin-left: -3%;
+  border-top-left-radius: 60px;
+  display: flex;
+  flex-flow: row wrap;
+  z-index: 999;
+}
+
+.place {
+  height: auto;
+  width: 48%;
+  text-align: center;
+  position: relative;
+  margin-bottom: 12px;
+}
+
+.place img {
+  border-radius: 6px;
+  box-shadow: 0 1px 4px rgba(26, 26, 27, 0.63);
+  display: block;
+  width: 85%;
+  margin: auto;
+  margin-bottom: 12px;
+}
+
+.place span {
+  position: absolute;
+  top: -13px;
+  right: -7px;
+  background: #eee;
+  color: #222;
+  text-transform: lowercase;
+  padding: 6px 8px;
+  border-radius: 100px;
+}
+
+.marker {
+  position: absolute;
+  background: red;
+  padding: 12px;
+}

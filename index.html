@@ -5,88 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
 
-    <style>
-      * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-        font-family: Arial, Helvetica, sans-serif;
-      }
-
-      body {
-        background: #eee;
-      }
-
-      header {
-        width: 100%;
-        background: #fff;
-        height: 9vh;
-        border-bottom: 1px solid #eee;
-        display: flex;
-        align-items: center;
-        padding: 0 6%;
-      }
-
-      main {
-        display: flex;
-        flex-flow: row wrap;
-        height: 91vh;
-      }
-
-      #map {
-        height: 100%;
-        width: 53%;
-        background: #666;
-      }
-
-      .places {
-        width: 50%;
-        height: 100%;
-        overflow: auto;
-        background: #fff;
-        padding: 50px;
-        box-shadow: -4px 6px 6px #000;
-        margin-left: -3%;
-        border-top-left-radius: 60px;
-        display: flex;
-        flex-flow: row wrap;
-        z-index: 999;
-      }
-
-      .place {
-        height: auto;
-        width: 48%;
-        text-align: center;
-        position: relative;
-        margin-bottom: 12px;
-      }
-
-      .place img {
-        border-radius: 6px;
-        box-shadow: 0 1px 4px rgba(26, 26, 27, 0.63);
-        display: block;
-        width: 85%;
-        margin: auto;
-        margin-bottom: 12px;
-      }
-
-      .place span {
-        position: absolute;
-        top: -13px;
-        right: -7px;
-        background: #eee;
-        color: #222;
-        text-transform: lowercase;
-        padding: 6px 8px;
-        border-radius: 100px;
-      }
-
-      .marker {
-        position: absolute;
-        background: red;
-        padding: 12px;
-      }
-    </style>
+    <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
     <header>
@@ -101,40 +20,50 @@
       </section>
     </main>
 
-    <script src="./src/services/idGenerator.js"></script>
-    <script src="./src/database/fakeBD.js"></script>
-    <script src="./src/services/Http.js"></script>
-    <script src="./src/Bedroom.js"></script>
-    <script src="./src/Places.js"></script>
-
-    <script src="./src/GoogleMaps.js"></script>
-
-    <script>
-      function initMap() {
-        const gMaps = new GoogleMaps(document.querySelector('#map'), google);
-
-        gMaps.drawMap();
-
-        (async () => {
-          const placesModel = new Places();
-
-          await placesModel.getPlaces();
-
-          placesModel.printPlaces();
-
-          console.log('placesModel :>> ', placesModel);
-          console.log('placesModel.data :>> ', placesModel.data);
-
-          gMaps.addMarkers(placesModel.data);
-        })();
-      }
-    </script>
-
-    <script
+    <!-- <script
       async
-      defer
       src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDRSlWeTpDY2A11UHxGxTstKZhEsk4qbns&callback=initMap"
       type="text/javascript"
-    ></script>
+    ></script> -->
+
+    <script src="./scripts/services/idGenerator.js"></script>
+    <script src="./scripts/database/fakeBD.js"></script>
+    <script src="./scripts/services/Http.js"></script>
+    <script src="./scripts/services/Pagination.js"></script>
+    <script src="./scripts/Bedroom.js"></script>
+    <script src="./scripts/Places.js"></script>
+
+    <script src="./scripts/CustomMarker.js"></script>
+    <script src="./scripts/GoogleMaps.js"></script>
+
+    <script>
+      (async () => {
+        const placesModel = new Places();
+
+        await placesModel.getPlaces();
+
+        console.log('placesModel :>> ', placesModel);
+        console.log('placesModel.places :>> ', placesModel.places);
+      })();
+
+      // function initMap() {
+      //   const gMaps = new GoogleMaps(document.querySelector('#map'), google);
+
+      //   gMaps.drawMap();
+
+      //   (async () => {
+      //     const placesModel = new Places();
+
+      //     await placesModel.getPlaces();
+
+      //     placesModel.printPlaces();
+
+      //     console.log('placesModel :>> ', placesModel);
+      //     console.log('placesModel.data :>> ', placesModel.data);
+
+      //     gMaps.addMarkers(placesModel.data);
+      //   })();
+      // }
+    </script>
   </body>
 </html>
