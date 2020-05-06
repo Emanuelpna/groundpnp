@@ -1,8 +1,17 @@
+@import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;600;700&display=swap');
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: 'Source Sans Pro', sans-serif;
+}
+
+:root {
+  --mainColor: #00c7a3;
+  --fadedMainColor: #e1faf5;
+
+  --darkColor: #1d1f29;
 }
 
 body {
@@ -12,62 +21,149 @@ body {
 header {
   width: 100%;
   background: #fff;
-  height: 9vh;
-  border-bottom: 1px solid #eee;
+  height: 8vh;
+  border-bottom: 1px solid #1d1f2938;
   display: flex;
   align-items: center;
-  padding: 0 6%;
+  justify-content: space-between;
+  padding: 0 8%;
+}
+
+header .orderPrice {
+  display: inline-block;
+  margin-left: 12px;
+  border-radius: 500px;
+  background: var(--mainColor);
+  color: #fff;
+  font-weight: 700;
+  font-size: 1.1rem;
+  text-align: center;
+  padding: 12px 24px;
 }
 
 main {
   display: flex;
-  flex-flow: row wrap;
-  height: 91vh;
+  flex-flow: column wrap;
+  height: 92vh;
 }
 
 #map {
-  height: 100%;
-  width: 53%;
+  height: 83%;
+  width: 45%;
   background: #666;
+  border-right: 1px solid #1d1f2938;
 }
 
-.places {
-  width: 50%;
+.checksContainer {
+  height: 17%;
+  background: #fff;
+  border-right: 1px solid #1d1f2938;
+}
+
+.checksContainer .checks {
+  height: 100%;
+  display: flex;
+  flex-flow: row nowrap;
+}
+
+.checksContainer .check {
+  flex: 1;
+  height: 100%;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
+}
+
+.checksContainer label {
+  width: 60%;
+  color: var(--darkColor);
+  font-weight: 700;
+  font-size: 1.4rem;
+  margin-bottom: 5px;
+}
+
+.checksContainer .checkIcon {
+  display: inline-block;
+  margin-right: 7px;
+  margin-bottom: -3px;
+}
+
+.checksContainer input {
+  border-radius: 4px;
+  border: 2px solid var(--darkColor);
+  padding: 12px 8px;
+  width: 60%;
+  font-size: 1rem;
+}
+
+.checksContainer input:focus {
+  border-color: var(--mainColor);
+}
+
+.placesContainer {
+  position: relative;
+  width: 55%;
+  height: 100%;
+}
+
+.placesContainer .places {
   height: 100%;
   overflow: auto;
-  background: #fff;
   padding: 50px;
-  box-shadow: -4px 6px 6px #000;
-  margin-left: -3%;
-  border-top-left-radius: 60px;
   display: flex;
   flex-flow: row wrap;
   z-index: 999;
 }
 
-.place {
+.placesContainer .pageController {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  font-size: 36px;
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  transition: 150ms ease-in-out;
+}
+
+.placesContainer .pageController.left  {
+  left: 0;
+}
+
+.placesContainer .pageController.right  {
+  right: 0;
+}
+
+.placesContainer .pageController:hover {
+  background: rgba(255, 255, 255, 0.7);
+  transition: 150ms ease-in-out;
+}
+
+.placesContainer .place {
   height: auto;
-  width: 48%;
+  width: 46%;
   text-align: center;
   position: relative;
   margin-bottom: 12px;
 }
 
-.place img {
+.placesContainer .place img {
   border-radius: 6px;
-  box-shadow: 0 1px 4px rgba(26, 26, 27, 0.63);
+  box-shadow: 0 1px 4px rgba(29, 31, 41, 0.54);
   display: block;
   width: 85%;
   margin: auto;
   margin-bottom: 12px;
 }
 
-.place span {
+.placesContainer .place span {
   position: absolute;
   top: -13px;
   right: -7px;
-  background: #eee;
-  color: #222;
+  background: #ffffff;
+  color: var(--mainColor);
   text-transform: lowercase;
   padding: 6px 8px;
   border-radius: 100px;
@@ -75,6 +171,17 @@ main {
 
 .marker {
   position: absolute;
-  background: red;
-  padding: 12px;
+  background: #fff;
+  color: var(--mainColor);
+  border-radius: 4px;
+  padding: 10px 12px;
+  font-weight: 700;
+  box-shadow: 0 1px 4px rgba(29, 31, 41, 0.54);
+  transition: 150ms ease-in-out;
+}
+
+.marker.active {
+  color: #fff;
+  background: var(--mainColor);
+  transition: 150ms ease-in-out;
 }

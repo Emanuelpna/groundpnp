@@ -1,30 +1,63 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>Quartos para a sua viagem · Groundpnp</title>
 
     <link rel="stylesheet" href="styles.css" />
+
+    <script src="https://unpkg.com/feather-icons"></script>
   </head>
   <body>
     <header>
       <img src="./groundpnp.svg" alt="logo" />
+
+      <div class="order">
+        <span class="orderText">Sua viagem por:</span>
+        <div class="orderPrice">R$ 150,00</div>
+      </div>
     </header>
 
     <main>
       <div id="map"></div>
 
-      <section class="places">
-        <!-- Content goes here -->
+      <div class="checksContainer">
+        <form class="checks">
+          <div class="check">
+            <label for="checkin">
+              <i data-feather="sunrise"></i> check-in
+            </label>
+            <input type="date" name="checkin" id="checkin" />
+          </div>
+
+          <div class="check">
+            <label for="checkout">
+              <i data-feather="sunset"></i> check-out
+            </label>
+            <input type="date" name="checkout" id="checkout" />
+          </div>
+        </form>
+      </div>
+
+      <section class="placesContainer">
+        <div class="pageController left">
+          <i data-feather="arrow-left"></i>
+        </div>
+
+        <div class="places"><!-- Content goes here --></div>
+
+        <div class="pageController right">
+          <i data-feather="arrow-right"></i>
+        </div>
       </section>
     </main>
 
-    <!-- <script
+    <script
       async
       src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDRSlWeTpDY2A11UHxGxTstKZhEsk4qbns&callback=initMap"
       type="text/javascript"
-    ></script> -->
+    ></script>
 
     <script src="./scripts/services/idGenerator.js"></script>
     <script src="./scripts/database/fakeBD.js"></script>
@@ -37,33 +70,49 @@
     <script src="./scripts/GoogleMaps.js"></script>
 
     <script>
+      feather.replace({ class: 'checkIcon', width: 26, height: 26 });
+
       (async () => {
         const placesModel = new Places();
 
         await placesModel.getPlaces();
 
+        const pageControllerLeft = document.querySelector(
+          '.pageController.left'
+        );
+
+        pageControllerLeft.addEventListener('click', () => {
+          placesModel.changeToPreviousPage();
+        });
+
+        const pageControllerRight = document.querySelector(
+          '.pageController.right'
+        );
+
+        pageControllerRight.addEventListener('click', () => {
+          placesModel.changeToNextPage();
+        });
+
         console.log('placesModel :>> ', placesModel);
         console.log('placesModel.places :>> ', placesModel.places);
       })();
 
-      // function initMap() {
-      //   const gMaps = new GoogleMaps(document.querySelector('#map'), google);
+      function initMap() {
+        const gMaps = new GoogleMaps(document.querySelector('#map'), google);
 
-      //   gMaps.drawMap();
+        gMaps.drawMap();
 
-      //   (async () => {
-      //     const placesModel = new Places();
+        (async () => {
+          const placesModel = new Places();
 
-      //     await placesModel.getPlaces();
+          await placesModel.getPlaces();
 
-      //     placesModel.printPlaces();
+          console.log('placesModel :>> ', placesModel);
+          console.log('placesModel.places :>> ', placesModel.places);
 
-      //     console.log('placesModel :>> ', placesModel);
-      //     console.log('placesModel.data :>> ', placesModel.data);
-
-      //     gMaps.addMarkers(placesModel.data);
-      //   })();
-      // }
+          gMaps.addMarkers(placesModel.places);
+        })();
+      }
     </script>
   </body>
 </html>

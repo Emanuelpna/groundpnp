@@ -16,13 +16,11 @@ class Places extends Pagination {
 
     const placesWithoutCoordinates = await http.get();
 
-    console.log('places :>> ', placesWithoutCoordinates);
-
     this.places = coordinates.map((coordinate, index) => {
       return new Bedroom(placesWithoutCoordinates[index], coordinate);
     });
 
-    this.paginatePlaces();
+    this.setTotalPages();
 
     this.printPlaces();
   }
@@ -44,20 +42,21 @@ class Places extends Pagination {
     });
   }
 
-  paginatePlaces() {
+  setTotalPages() {
     const totalPlaces = this.places.length;
 
     this._totalPages = Math.ceil(totalPlaces / this.placesPerPage);
-
-    console.log('this.page :>> ', this.getPage());
-    console.log('this.totalPages :>> ', this._totalPages);
-    console.log('this.places :>> ', this.places);
   }
 
   filterPaginatedPlaces(places) {
     const currentPage = this.getPage();
+    const previousPage = currentPage - 1
+
+    const limitOfPlaces = currentPage * this.placesPerPage;
+    const offsetPlaces = this.placesPerPage * previousPage;
+
     return places.filter(
-      (_, index) => index <= currentPage * this.placesPerPage
+      (_, index) => index < limitOfPlaces && index >= offsetPlaces
     );
   }
 
@@ -65,11 +64,6 @@ class Places extends Pagination {
     const container = document.querySelector('.places');
 
     container.innerHTML = '';
-
-    console.log(
-      'this.filterPaginatedPlaces(this.places) :>> ',
-      this.filterPaginatedPlaces(this.places)
-    );
 
     container.innerHTML = this.filterPaginatedPlaces(this.places)
       .map(
