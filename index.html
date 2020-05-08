@@ -42,10 +42,9 @@
       </div>
 
       <section class="placesContainer">
-        
         <div class="places"><!-- Content goes here --></div>
-        
-        <div class="pageController left">
+
+        <div class="pageController left" style="opacity: 0; z-index: -1;">
           <i data-feather="arrow-left"></i>
         </div>
         <div class="pageController right">
@@ -54,11 +53,11 @@
       </section>
     </main>
 
-    <!-- <script
+    <script
       async
       src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDRSlWeTpDY2A11UHxGxTstKZhEsk4qbns&callback=initMap"
       type="text/javascript"
-    ></script> -->
+    ></script>
 
     <script src="./scripts/services/idGenerator.js"></script>
     <script src="./scripts/database/fakeBD.js"></script>
@@ -83,17 +82,23 @@
             '.pageController.left'
           );
 
-          pageControllerLeft.addEventListener('click', () => {
-            placesModel.changeToPreviousPage();
-            markerLoader(placesModel.places);
-          });
-
           const pageControllerRight = document.querySelector(
             '.pageController.right'
           );
 
+          pageControllerLeft.addEventListener('click', (e) => {
+            placesModel.changeToPreviousPage(
+              pageControllerLeft,
+              pageControllerRight
+            );
+            markerLoader(placesModel.places);
+          });
+
           pageControllerRight.addEventListener('click', () => {
-            placesModel.changeToNextPage();
+            placesModel.changeToNextPage(
+              pageControllerLeft,
+              pageControllerRight
+            );
             markerLoader(placesModel.places);
           });
 
@@ -102,19 +107,19 @@
       };
 
       // Somente durante desenvolvimento
-      loadInitialPlaces(() => {
-        console.log('carregado');
-      });
+      // loadInitialPlaces(() => {
+      //   console.log('carregado');
+      // });
 
-      // function initMap() {
-      //   const gMaps = new GoogleMaps(document.querySelector('#map'), google);
+      function initMap() {
+        const gMaps = new GoogleMaps(document.querySelector('#map'), google);
 
-      //   gMaps.drawMap();
+        gMaps.drawMap();
 
-      //   loadInitialPlaces((places) => {
-      //     gMaps.addMarkers(places);
-      //   });
-      // }
+        loadInitialPlaces((places) => {
+          gMaps.addMarkers(places);
+        });
+      }
     </script>
   </body>
 </html>

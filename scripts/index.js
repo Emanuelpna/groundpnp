@@ -40,7 +40,7 @@ document.querySelector('.places').addEventListener('click', (e) => {
 
 document.querySelector('.places').addEventListener('mouseover', (e) => {
   const clickedElement = e.target;
-  console.log('clickedElement.className :>> ', clickedElement.className);
+
   const parentElement =
     clickedElement.className === 'place'
       ? clickedElement
@@ -55,7 +55,7 @@ document.querySelector('.places').addEventListener('mouseover', (e) => {
 
   if (parentElement.className && parentElement.className === 'place') {
     const placeID = parentElement.getAttribute('data-id');
-    console.log('placeID :>> ', placeID);
+
     const marker = document.querySelector(`.marker[data-id="${placeID}"]`);
 
     if (marker.className === 'marker') {

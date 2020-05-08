@@ -12,6 +12,10 @@ class Pagination {
     return this._page;
   }
 
+  getTotalPages() {
+    return this._totalPages;
+  }
+
   nextPage() {
     if (this._totalPages === 0) return this._getObjectError();
 
