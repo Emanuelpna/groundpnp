@@ -105,7 +105,6 @@ main {
 }
 
 .checksContainer label {
-  width: 60%;
   color: var(--darkColor);
   font-weight: 700;
   font-size: 1.4rem;
@@ -248,7 +247,7 @@ main {
   position: relative;
 }
 .place.selected::after {
-  content: "";
+  content: '';
   position: absolute;
   width: 30px;
   height: 30px;
@@ -275,4 +274,108 @@ main {
   background: var(--mainColor);
   transition: backgorund 150ms ease-in-out;
   z-index: 999;
+}
+
+@media screen and (max-width: 768px) {
+  header {
+    position: fixed;
+    z-index: 999;
+  }
+
+  header .orderText.noOrder {
+    color: var(--darkColor);
+    font-size: 0.9rem;
+  }
+
+  header .order {
+    width: 50%;
+  }
+
+  header .orderContainer {
+    padding: 4px;
+  }
+
+  header .orderText {
+    font-size: 0.8rem;
+  }
+
+  header .orderPrice {
+    font-size: 1.2rem;
+    margin-top: 0;
+  }
+
+  #map {
+    top: 10vh;
+    width: 100%;
+    height: 45%;
+    position: fixed;
+  }
+
+  .checksContainer {
+    left: 0;
+    bottom: 0;
+    right: 0;
+    width: 100%;
+    border-radius: 0;
+    box-shadow: 0 -1px 6px rgba(29, 31, 41, 0.24);
+    z-index: 999;
+  }
+
+  .placesContainer {
+    position: relative;
+    width: 100%;
+    margin-top: calc(10vh + 45%);
+    height: auto;
+    margin-bottom: 30%;
+    padding-top: 18px;
+    padding-bottom: 12%;
+    background: #fff;
+    border-top-left-radius: 40px;
+    border-top-right-radius: 40px;
+    box-shadow: 0 -1px 6px rgba(29, 31, 41, 0.54);
+  }
+
+  .placesContainer .pageController {
+    top: initial;
+    width: 50%;
+    padding: 20px 25px;
+    bottom: 0;
+    background: rgba(195, 201, 233, 0.26);
+  }
+
+  .placesContainer .pageController.right {
+    justify-content: flex-end;
+    border-left: 1px solid var(--fadedMainColor);
+  }
+
+  .checksContainer .checks {
+    width: 100%;
+  }
+
+  .checksContainer label {
+    font-size: 1.2rem;
+  }
+
+  .checksContainer input {
+    width: 90%;
+  }
+
+  .placesContainer .places {
+    padding: 20px 12px;
+    flex-flow: column nowrap;
+  }
+
+  .place {
+    width: 100%;
+  }
+
+  header .logo {
+    width: 120px;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .placesContainer {
+    margin-top: calc(20vh + 45%);
+  }
 }
