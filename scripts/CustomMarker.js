@@ -1,9 +1,10 @@
-const CustomMarker = function (coordinates, map, content) {
-  const CustomMarker = function (coordinates, map, content) {
+const CustomMarker = function (coordinates, map, content, markerID) {
+  const CustomMarker = function (coordinates, map, content, markerID) {
     this.markerElement = false;
     this.content = content;
     this.coordinates = coordinates;
-  
+    this.markerID = markerID;
+
     this.setMap(map);
   };
 
@@ -11,8 +12,12 @@ const CustomMarker = function (coordinates, map, content) {
 
   CustomMarker.prototype.onAdd = function () {
     this.markerElement = document.createElement('div');
+    
     this.markerElement.classList.add('marker');
+
     this.markerElement.innerHTML = this.content;
+
+    this.markerElement.setAttribute('data-id', this.markerID);
 
     this.getPanes().overlayImage.appendChild(this.markerElement);
   };
@@ -30,5 +35,5 @@ const CustomMarker = function (coordinates, map, content) {
     this.markerElement.parentNode.removeChild(this.markerElement);
   };
 
-  return new CustomMarker(coordinates, map, content);
+  return new CustomMarker(coordinates, map, content, markerID);
 };

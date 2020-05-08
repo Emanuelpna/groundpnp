@@ -25,10 +25,8 @@ class GoogleMaps {
       const customMarker = CustomMarker(
         googleCoordinates,
         this.map,
-        place.price.toLocaleString('pt-BR', {
-          style: 'currency',
-          currency: 'BRL',
-        })
+        place.price.formatPrice(),
+        place.id
       );
     });
   }

@@ -1,6 +1,6 @@
 class Bedroom {
   constructor(api, coordinates) {
-    this.id = idGenerator.newID();
+    this.id = coordinates.id;
     this.picture = api.photo;
     this.propetyType = api.property_type;
     this.name = api.name;

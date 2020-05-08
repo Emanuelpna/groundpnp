@@ -20,6 +20,8 @@ class Places extends Pagination {
       return new Bedroom(placesWithoutCoordinates[index], coordinate);
     });
 
+    this.sort;
+
     this.setTotalPages();
 
     this.printPlaces();
@@ -35,13 +37,6 @@ class Places extends Pagination {
     this.getPlaces();
   }
 
-  filterPrice(price) {
-    return price.toLocaleString('pt-BR', {
-      style: 'currency',
-      currency: 'BRL',
-    });
-  }
-
   setTotalPages() {
     const totalPlaces = this.places.length;
 
@@ -50,14 +45,33 @@ class Places extends Pagination {
 
   filterPaginatedPlaces(places) {
     const currentPage = this.getPage();
-    const previousPage = currentPage - 1
+    const previousPage = currentPage - 1;
 
     const limitOfPlaces = currentPage * this.placesPerPage;
     const offsetPlaces = this.placesPerPage * previousPage;
 
     return places.filter(
-      (_, index) => index < limitOfPlaces && index >= offsetPlaces
+      (_, index) => index >= offsetPlaces && index < limitOfPlaces
     );
+  }
+
+  placeTemplate(place) {
+    const { picture, name, price, propetyType, id } = place;
+
+    return `
+      <div class="place" data-id="${id}">
+        <div class="placeCoverContainer">
+          <img
+            class="placeCover"
+            src="${picture}"
+            alt="${name} - ${propetyType}"
+          />
+        </div>
+        <span class="placeType">${propetyType}</span>
+        <h3 class="placeTitle">${name.toLowerCase()}</h3>
+        <strong data-price="${price}" class="placePrice">${price.formatPrice()}</strong>
+      </div>
+    `;
   }
 
   printPlaces() {
@@ -66,18 +80,7 @@ class Places extends Pagination {
     container.innerHTML = '';
 
     container.innerHTML = this.filterPaginatedPlaces(this.places)
-      .map(
-        ({ picture, name, price, propetyType, id }) =>
-          `<div class="place" data-id="${id}">
-          <img
-            src="${picture}"
-            alt="${name} - ${propetyType}"
-          />
-          <h3>${name}</h3>
-          <span>${propetyType}</span>
-          <strong>${this.filterPrice(price)}</strong>
-        </div>`
-      )
+      .map((place) => this.placeTemplate(place))
       .join(' ');
   }
 }

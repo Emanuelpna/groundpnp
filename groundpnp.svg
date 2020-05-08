@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="159.241" height="32" viewBox="0 0 159.241 32">
   <g id="Grupo_4" data-name="Grupo 4" transform="translate(440.063 -275)">
-    <text id="groundpnp" transform="translate(-344.823 300)" fill="#00c7a3" font-size="23" font-family="OpenSans-Bold, Open Sans" font-weight="700"><tspan x="-63.345" y="0">groundpnp</tspan></text>
-    <path id="Caminho_1" data-name="Caminho 1" d="M-436.823,299.151l12.3-20.739,12.157,20.739-7.58,5.721-8.559-12.3,3.982-4.006,3.507,4.006-10.515,12.3Z" transform="translate(-2 -0.271)" fill="none" stroke="#00c7a3" stroke-width="2"/>
+    <text id="groundpnp" transform="translate(-344.823 300)" fill="#4A60E0" font-size="23" font-family="OpenSans-Bold, Open Sans" font-weight="700"><tspan x="-63.345" y="0">groundpnp</tspan></text>
+    <path id="Caminho_1" data-name="Caminho 1" d="M-436.823,299.151l12.3-20.739,12.157,20.739-7.58,5.721-8.559-12.3,3.982-4.006,3.507,4.006-10.515,12.3Z" transform="translate(-2 -0.271)" fill="none" stroke="#4A60E0" stroke-width="2.5"/>
   </g>
 </svg>
