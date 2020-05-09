@@ -85,6 +85,7 @@ main {
   width: 40%;
   border-radius: 400px;
   box-shadow: 0 1px 4px rgba(29, 31, 41, 0.54);
+  z-index: 999;
 }
 
 .checksContainer .checks {
@@ -257,23 +258,26 @@ main {
   right: 13px;
 }
 
-.marker {
-  position: absolute;
+.leaflet-popup-content-wrapper {
   background: #fff;
-  color: var(--mainColor);
+  color: var(--mainColor) !important;
   font-size: 0.85rem;
-  border-radius: 4px;
-  padding: 10px 12px;
+  border-radius: 4px !important;
+  padding: 12px 20px !important;
   font-weight: 700;
-  box-shadow: 0 1px 4px rgba(29, 31, 41, 0.54);
+  box-shadow: 0 1px 4px rgba(29, 31, 41, 0.54) !important;
   transition: backgorund 150ms ease-in-out;
 }
 
-.marker.active {
+.leaflet-popup-content-wrapper.active {
   color: #fff;
   background: var(--mainColor);
   transition: backgorund 150ms ease-in-out;
   z-index: 999;
+}
+
+.leaflet-popup-content {
+  margin: 0 !important;
 }
 
 .loader {

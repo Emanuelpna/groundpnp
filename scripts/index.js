@@ -1,3 +1,11 @@
+console.log('<<: Prazer em ter você aqui! :>>');
+console.log(
+  'Se quiser conhecer melhor meus outros trabalhos dá uma olhada em: https://github.com/Emanuelpna e em https://www.linkedin.com/in/emanuelpna'
+);
+console.log('Ícones por: https://feathericons.com/');
+console.log('<<: Obrigado! :>>');
+
+// Adiciona método de formatação de preço para números do JS
 Number.prototype.formatPrice = function (price) {
   return this.toLocaleString('pt-BR', {
     style: 'currency',
@@ -5,61 +13,57 @@ Number.prototype.formatPrice = function (price) {
   });
 };
 
+// Ativa o Feather Icons
 feather.replace({ class: 'checkIcon', width: 26, height: 26 });
 
+// Inicia o calculador de tempo de estadia
 const daysSpentTraveling = new DaySpan();
 daysSpentTraveling.bind(
   document.querySelector('#checkin'),
   document.querySelector('#checkout'),
-  document.querySelector('.order')
+  document.querySelector('.order'),
+  document.querySelector('.places')
 );
 
-document.querySelector('.places').addEventListener('click', (e) => {
-  const clickedElement = e.target;
+(async () => {
+  // Cria o mapa centralziado em Juiz de Fora e coloca na div com id 'map'
+  const map = L.map('map').setView([-21.7534716, -43.3365406], 13);
 
-  const parentElement =
-    clickedElement.className === 'placeCover'
-      ? clickedElement.parentElement.parentElement
-      : clickedElement.parentElement;
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution:
+      '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+  }).addTo(map);
 
-  const allPlacesSelecteds = document.querySelectorAll(`.place.selected`);
-  [...allPlacesSelecteds].forEach((place) => {
-    place.className = 'place';
+  // Instancia os a classe de Localizações
+  const placesModel = new Places(document.querySelector('.places'));
+
+  // Carrega a primeira página
+  await placesModel.getPlaces();
+
+  // Cria os marcadores e coloca no mapa
+  const markers = placesModel.places.map((place) => {
+    return {
+      id: place.id,
+      marker: L.marker([place.latitude, place.longitude], {
+        riseOnHover: true,
+      })
+        .addTo(map)
+        .bindPopup(place.price.formatPrice()),
+    };
   });
 
-  if (parentElement.className && parentElement.className === 'place') {
-    parentElement.className = 'place selected';
+  // Adiciona o popUp no hover dos cards de Localização
+  placesModel.setMarkerHighlight(markers);
 
-    const bedroomPrice = parentElement
-      .querySelector('.placePrice')
-      .getAttribute('data-price');
+  /** Adiciona os eventos de paginação */
+  const pageControllerLeft = document.querySelector('.pageController.left');
+  const pageControllerRight = document.querySelector('.pageController.right');
 
-    daysSpentTraveling.setBedroomPrice(bedroomPrice);
-  }
-});
-
-document.querySelector('.places').addEventListener('mouseover', (e) => {
-  const clickedElement = e.target;
-
-  const parentElement =
-    clickedElement.className === 'place'
-      ? clickedElement
-      : clickedElement.className === 'placeCover'
-      ? clickedElement.parentElement.parentElement
-      : clickedElement.parentElement;
-
-  const allMarkers = document.querySelectorAll(`.marker`);
-  [...allMarkers].forEach((marker) => {
-    marker.className = 'marker';
+  pageControllerLeft.addEventListener('click', (e) => {
+    placesModel.changeToPreviousPage(pageControllerLeft, pageControllerRight);
   });
 
-  if (parentElement.className && parentElement.className === 'place') {
-    const placeID = parentElement.getAttribute('data-id');
-
-    const marker = document.querySelector(`.marker[data-id="${placeID}"]`);
-
-    if (marker.className === 'marker') {
-      marker.className = 'marker active';
-    }
-  }
-});
+  pageControllerRight.addEventListener('click', () => {
+    placesModel.changeToNextPage(pageControllerLeft, pageControllerRight);
+  });
+})();

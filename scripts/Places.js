@@ -1,10 +1,11 @@
 class Places extends Pagination {
-  constructor() {
+  constructor(placesElement) {
     super();
 
     this.database = FakeDatabase;
 
     this.places = [];
+    this.placesElement = placesElement;
 
     this.placesPerPage = 4;
 
@@ -12,7 +13,7 @@ class Places extends Pagination {
     this.sortingOrientation = 'NORMAL';
   }
 
-  async getPlaces() {
+  async getPlaces(placesElement) {
     this.setLoading();
 
     const coordinates = this.database.getAllData();
@@ -59,6 +60,29 @@ class Places extends Pagination {
       default:
         break;
     }
+  }
+
+  setMarkerHighlight(markers) {
+    this.placesElement.addEventListener('mouseover', (e) => {
+      const clickedElement = e.target;
+
+      const parentElement =
+        clickedElement.className === 'place'
+          ? clickedElement
+          : clickedElement.className === 'placeCover'
+          ? clickedElement.parentElement.parentElement
+          : clickedElement.parentElement;
+
+      if (parentElement.className && parentElement.className === 'place') {
+        const placeID = Number(parentElement.getAttribute('data-id'));
+
+        const marker = markers.filter((marker) => marker.id === placeID);
+
+        if (marker) {
+          marker[0].marker.openPopup();
+        }
+      }
+    });
   }
 
   changeToNextPage(pageControllerPrevious, pageControllerNext) {
@@ -137,7 +161,8 @@ class Places extends Pagination {
 
   setLoading() {
     const container = document.querySelector('.places');
-    container.innerHTML += "<div class='loader'><div class='lds-dual-ring'></div></div>"
+    container.innerHTML +=
+      "<div class='loader'><div class='lds-dual-ring'></div></div>";
   }
 
   printPlaces() {

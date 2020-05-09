@@ -10,9 +10,41 @@ class DaySpan {
     this.priceElement = null;
   }
 
-  bind(startDate, endDate, priceElement) {
+  bind(startDate, endDate, priceElement, placeElement) {
     this.priceElement = priceElement;
 
+    this.setPriceCalculatorEvents(startDate, endDate);
+
+    this.setPriceGetterEvent(placeElement);
+  }
+
+  setPriceGetterEvent(placeElement) {
+    placeElement.addEventListener('click', (e) => {
+      const clickedElement = e.target;
+
+      const parentElement =
+        clickedElement.className === 'placeCover'
+          ? clickedElement.parentElement.parentElement
+          : clickedElement.parentElement;
+
+      const allPlacesSelecteds = document.querySelectorAll(`.place.selected`);
+      [...allPlacesSelecteds].forEach((place) => {
+        place.className = 'place';
+      });
+
+      if (parentElement.className && parentElement.className === 'place') {
+        parentElement.className = 'place selected';
+
+        const bedroomPrice = parentElement
+          .querySelector('.placePrice')
+          .getAttribute('data-price');
+
+        this.setBedroomPrice(bedroomPrice);
+      }
+    });
+  }
+
+  setPriceCalculatorEvents(startDate, endDate) {
     startDate.addEventListener('change', (e) => {
       this.startDate = new Date(e.target.value);
       this.calculatePriceTimeSpent();

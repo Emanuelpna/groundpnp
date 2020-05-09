@@ -1,7 +1,7 @@
 class GoogleMaps {
   constructor(element, google) {
     this.googleMaps = google.maps;
-    this.juizDeFora = { lat: -21.7557364, lng: -43.3596817 };
+    this.juizDeFora = { lat: -21.7754716, lng: -43.3365406 };
 
     this.element = element;
 
